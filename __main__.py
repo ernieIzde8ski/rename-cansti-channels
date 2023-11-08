@@ -26,7 +26,7 @@ class Args(Tap):
         self.add_argument("-n", "--dry-run")
 
 
-async def main():
+async def main() -> None:
     args = Args(underscores_to_dashes=True).parse_args()
 
     # Discord has a lot of output we don't care about,
@@ -47,7 +47,7 @@ async def main():
         if cansti is None:
             raise RuntimeError("couldn't find the guild!")
 
-        updated_channels = 0
+        channel_updates: list[tuple[str, str]] = []
         for channel_id, name in channels.items():
             channel = cansti.get_channel_or_thread(channel_id)
             if channel is None:
@@ -60,13 +60,14 @@ async def main():
                 try:
                     if not args.dry_run:
                         await channel.edit(name=name, reason=args.reason)
-                    logging.info(f"Updated channel: {channel_id} {name}")
-                    updated_channels += 1
+                    channel_updates.append((channel.name, name))
                 except Exception:
-                    logging.exception(f"couldn't update channel with id {channel_id}")
+                    logging.exception(f"Couldn't update channel with id {channel_id}")
 
-        if updated_channels > 1:
-            logging.info(f"Finished updating {updated_channels} channels!")
+        max_old_len = max(len(c[0]) for c in channel_updates)
+        for old, new in channel_updates:
+            old = old.ljust(max_old_len)
+            logging.info(f"Updated channel:  {old} │ {new}")
 
 
 if __name__ == "__main__":
