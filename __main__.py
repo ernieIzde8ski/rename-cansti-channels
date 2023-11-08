@@ -57,10 +57,11 @@ async def main() -> None:
                     f"Channel would be updated to same name: {channel_id} {name}"
                 )
             else:
+                update = (channel.name, name)
                 try:
                     if not args.dry_run:
                         await channel.edit(name=name, reason=args.reason)
-                    channel_updates.append((channel.name, name))
+                    channel_updates.append(update)
                 except Exception:
                     logging.exception(f"Couldn't update channel with id {channel_id}")
 
