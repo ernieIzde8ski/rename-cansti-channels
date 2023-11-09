@@ -1,5 +1,8 @@
+#!/usr/bin/env python3
+
 import asyncio
 import logging
+from typing import TYPE_CHECKING
 
 import discord
 from discord import Client, Intents
@@ -47,23 +50,39 @@ async def main() -> None:
         if cansti is None:
             raise RuntimeError("couldn't find the guild!")
 
+        me = cansti.get_member(client.user.id)  # type: ignore
+        if me is None:
+            raise RuntimeError("Couldn't get client relative to guild.")
+
         channel_updates: list[tuple[str, str]] = []
         for channel_id, name in channels.items():
             channel = cansti.get_channel_or_thread(channel_id)
+            log: tuple[int, str | None] = (0, None)
+
             if channel is None:
-                logging.error(f"Couldn't find channel: {channel_id} {name}")
+                log = (logging.ERROR, f"Couldn't find channel")
             elif channel.name == name:
-                logging.debug(
-                    f"Channel would be updated to same name: {channel_id} {name}"
-                )
-            else:
-                update = (channel.name, name)
-                try:
-                    if not args.dry_run:
-                        await channel.edit(name=name, reason=args.reason)
-                    channel_updates.append(update)
-                except Exception:
-                    logging.exception(f"Couldn't update channel with id {channel_id}")
+                log = (logging.DEBUG, f"Channel would be updated to same name")
+            elif channel.permissions_for(me).manage_channels is False:
+                log = (logging.ERROR, f"Lacking 'Manage Channel' permissions for channel")
+
+            if log[1] is not None:
+                logging.log(log[0], f"{log[1]}: {channel_id:<19} {name}")
+                continue
+
+            if TYPE_CHECKING:
+                assert channel is not None
+
+            update = (channel.name, name)
+            try:
+                if not args.dry_run:
+                    await channel.edit(name=name, reason=args.reason)
+                channel_updates.append(update)
+            except Exception:
+                logging.exception(f"Couldn't update channel with id {channel_id}")
+
+        if len(channel_updates) == 0:
+            return
 
         max_old_len = max(len(c[0]) for c in channel_updates)
         for old, new in channel_updates:
