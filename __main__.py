@@ -2,7 +2,7 @@
 
 import asyncio
 import logging
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
 import discord
 from discord import Client, Intents
@@ -24,6 +24,7 @@ class Args(Tap):
     debug: bool = False
     """Emit debug-level logs."""
 
+    @override
     def configure(self) -> None:
         self.add_argument("channel_lists", nargs="+")
         self.add_argument("-n", "--dry-run")
