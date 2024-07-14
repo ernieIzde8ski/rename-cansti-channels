@@ -9,25 +9,32 @@ from discord import Client, Intents
 from tap import Tap
 
 from auth import login_with_env
-from theme import Theme, read_themes
+from theme import Theme, normalize_unquoted_target_name, read_themes
 
 
 class Args(Tap):
     themes: list[str]
     """The list(s) you plan on using. Supports '-' for reading from stdin."""
     guild: int = 271034455462772737
-    """ID of server for which to update channel names. Defaults to Cansti's."""
+    """ID of guild for which to update channel names. Defaults to Cansti's."""
     dry_run: bool = False
     """Dry-run mode."""
     reason: str | None = None
     """Reason supplied to audit log for channel update."""
     debug: bool = False
     """Emit debug-level logs."""
+    emit_theme: bool = False
+    """Emit the current state of the target guild as a theme, relative to the input themes. Implies --dry-run."""
 
     @override
     def configure(self) -> None:
         self.add_argument("themes", nargs="+")
         self.add_argument("-n", "--dry-run")
+
+    @override
+    def process_args(self) -> None:
+        if self.emit_theme:
+            self.dry_run = True
 
 
 async def rename_channels(
@@ -82,6 +89,30 @@ async def rename_channels(
         logging.info(f"Updated channel:  {old} │ {new}")
 
 
+def emit_theme(cansti: discord.Guild, theme: Theme):
+    for i, (channel_id, target_name) in enumerate(theme.items()):
+        channel = cansti.get_channel(channel_id)
+
+        if channel is None:
+            warning_msg = "couldn't find channel with id " + str(channel_id)
+            print("# WARNING:", warning_msg)
+            logging.warning(warning_msg)
+            continue
+        elif channel.name == target_name:
+            continue
+
+        if isinstance(channel, discord.CategoryChannel) and i != 0:
+            # adding an extra space before guild channels
+            print()
+
+        normalized_name = normalize_unquoted_target_name(channel.name)
+
+        if channel.name == normalized_name:
+            print(channel.id, channel.name)
+        else:
+            print(channel.id, f'"{channel.name}"')
+
+
 async def main() -> None:
     args = Args(underscores_to_dashes=True).parse_args()
 
@@ -104,9 +135,12 @@ async def main() -> None:
         if cansti is None:
             raise RuntimeError("couldn't find the guild!")
 
-        await rename_channels(
-            client, cansti, theme, dry_run=args.dry_run, reason=args.reason
-        )
+        if args.emit_theme:
+            emit_theme(cansti, theme)
+        else:
+            await rename_channels(
+                client, cansti, theme, dry_run=args.dry_run, reason=args.reason
+            )
 
 
 if __name__ == "__main__":
