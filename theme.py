@@ -10,8 +10,12 @@ class ParserError(Exception):
     pass
 
 
-def read_channel_list(fp: str | Path) -> dict[int, str]:
-    """Read from a filepath into a mapping of channel ID to channel name."""
+type Theme = dict[int, str]
+"""A mapping of Discord channel ID to channel name."""
+
+
+def read_theme(fp: str | Path) -> Theme:
+    """Read from a filepath into Theme."""
     if fp == "-":
         lines = sys.stdin.readlines()
     else:
@@ -33,7 +37,7 @@ def read_channel_list(fp: str | Path) -> dict[int, str]:
         # lines take a format: channel ID, channel name
         match = re.match(r"(\d+)\s+(.+)", line)
         if not match:
-            raise ParserError("Couldn't get a match!", f"bad line: {line}")
+            raise ParserError("Couldn't get a match!\n" f"bad line: {line}")
 
         channel_id = int(match[1])
 
@@ -51,11 +55,11 @@ def read_channel_list(fp: str | Path) -> dict[int, str]:
     return resp
 
 
-def read_channel_lists(*paths: str | Path) -> dict[int, str]:
-    """Read channel lists from multiple paths into one mapping."""
-    if not paths:
-        return {}
-    resp = read_channel_list(paths[0])
-    for path in paths[1:]:
-        resp.update(read_channel_list(path))
+def read_themes(*paths: str | Path) -> dict[int, str]:
+    """Read themes from multiple paths into one mapping."""
+    resp = {}
+
+    for path in paths:
+        resp.update(read_theme(path))
+
     return resp
