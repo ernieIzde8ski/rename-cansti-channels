@@ -1,47 +1,83 @@
-# Default-ish/unthemed state, revised continuously
+# Default-ish/unthemed state. Last revision: 2024-09-29.
+#
+# This list represents what I perceive as the most neutral
+# list of names. Roughly, that means: the name with obvious,
+# otherwise neutral clarity of purpose that has the most
+# recent or longstanding history.
+#
+# Channels with 3+ names have their additional aliases
+# listed within the `aliases` file.
+
+### main channels
 360564659604160512  "Important"
 701541447345766441  cool-and-new-rules
 304757394158649344  executive-cancil
 606134948469932032  cangress
-300001904061186048  propaganronpa
+#300001904061186048 propaganronpa
+300001904061186048  propaganda
 271034455462772737  foundation
-484895888507011098  lobby
-1151327477860409435 server-highlights-3
+1289788346603933768 new-lobby-for-a-new-world
+1151327477860409435 starboard
 
-360571246003486721  "Chat"
-277885630451810305  general-annoyance
-371042388744994817  cabstigram
-314455029576892416  pordel-in-the-swamp
-1087429788647567411 gamedev-and-chills
+360571246003486721   "Chat"
+277885630451810305   general-annoyance
+#371042388744994817  canstigram
+371042388744994817   cabstigram
+#314455029576892416  pordel-in-the-swamp
+314455029576892416   hiveswamp
+#1087429788647567411 gamedev-and-chills
+1087429788647567411  "ｇａｍｅｄｅｖ👏ａｎｄ👏ｃｈｉｌｌ"
 #863797791012159538  tanukiposting
-863797791012159538  foxposting
-296130442493689857  cereal-balls
+863797791012159538   foxposting
 
 360570611850018836  "Memetic"
 275367366584434709  meme-talkshow
 285870746759200778  sharing-doc
-416300638771609600  slugcat-gayming
+#416300638771609600 slugcat-gayming
+416300638771609600  video-gayming
 709109579925159946  jaedquest
 280067736183504896  19-19-19-art
+#863805252779245660 musicposting-elitism
 863805252779245660  musicposing-elitism
 
-650984828384313354  "Opposition"
-407003496160690186  oppo-ballpit-style
-405551039748636692  gamergate-debate
-#286853054010097666  graveyard-chamber
-#286853054010097666  graveyard-shift
-#286853054010097666  spammy-whammy-kablammy
-286853054010097666  essentially-1984
-1226330058856202291 in-nomine-patris-et-fili-et-spiritus-sancti
-357703670722199564 anime-quarantine-zone
+650984828384313354   "Opposition"
+#407003496160690186  oppo-ballpit-style
+407003496160690186   ballpit
+#405551039748636692  gamergate-debate
+405551039748636692   debate-assembly
+286853054010097666   spammy-whammy
+#1226330058856202291 in-nomine-patris-et-fili-et-spiritus-sancti
+1226330058856202291  blessboard
+357703670722199564   anime-quarantine-zone
+296130442493689857   cereal
 
 360568241183129600 "Voice Chat"
-#286142798820802561 stream-voicechat
-#286142798820802561 stream-voicecat
-286142798820802561 stream-bobcat
+286142798820802561 stream-voicechat
 622878923465949204 "I AM AT ALDI"
+893577030795403295 "[current obsession] gamedeving"
+295229856096976906 "weeb media liveblog lab"
 
 360572120218206211 "modstuff idk"
 
 ### threads
 982041094038634596 "depraved musical rants"
+
+### try not to mangle!
+715609066461724833  "Archives"
+#484895888507011098 lobby
+484895888507011098  archive-lobby-varennes
+#307618578511822858 fate-of-the-debate
+307618578511822858  archive-fate-of-the-debate
+1092190739468931102 archive-lettre-de-signet
+300717129882140683  archive-brasil
+296067957275099137  archive-canniseum-rp-rap
+1005939802799095868 server-highlights
+1146501564186497074 server-highlights
+730142506552918037  archive-channel-info
+298202464388382722  archive-old-rules
+587022077853302797  archive-hierarchy
+280115690579558400  archive-old-cangress
+440635275170021376  archive-wholesome-vibes
+416301015550132224  archive-spoilers
+764842328480284673  archive-pidgin-mr-worldwide-anglo-nee
+410903892008763392  archive-lisa-temple
