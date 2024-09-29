@@ -1,12 +1,12 @@
-# Default-ish/unthemed state. Last revision: 2024-09-29.
+# Default-ish state. Last revision: 2024-09-29.
 #
 # This list represents what I perceive as the most neutral
 # list of names. Roughly, that means: the name with obvious,
 # otherwise neutral clarity of purpose that has the most
 # recent or longstanding history.
 #
-# Channels with 3+ names have their additional aliases
-# listed within the `aliases` file.
+# Channels with 3+ known names have their additional aliases
+# listed within `default-aliases`.
 
 ### main channels
 360564659604160512  "Important"
